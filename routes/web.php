@@ -1,6 +1,15 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProdutoController;
+
+Route::resource('clients', ClientController::class); //rotas resources
+
+Route::get('/produtos', [ProdutoController::class, 'index'])->name("produto.index");
+
+//passagem de paramentros pela url
+Route::get('/produto/{id?}', [ProdutoController::class, 'show'])->name('produto.show');
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,11 +25,6 @@ Route::any('/any', function(){
 
 Route::match(['get', 'post'], "/match", function(){
     return "permite apenas acessos definidos";
-});
-
-//passagem de paramentros pela url
-Route::get('/produto/{id}', function($id){
-    return "O id do produto é: " . $id;
 });
 
 Route::redirect('/sobre', '/rodinCommerce');
